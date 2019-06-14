@@ -18,8 +18,6 @@ router.post('/plant', async (req,res)=>{
 
 })
 
-
-
 router.get('/plant', async (req,res)=>{
     try{
         const plant = await Plants.find()
@@ -29,27 +27,18 @@ router.get('/plant', async (req,res)=>{
     }
 })
 
-
-
-
-
-
-
-
-
-router.delete('/plant/:id', async (req,res)=>{
-    
-    
+router.delete('/plant/:id', async (req,res)=>{    
     try{
         const plant = await Plants.findOneAndDelete({_id: req.params.id})
         if(!plant){
             return res.status(404).send()
         }
+
         res.send(plant)
     }catch(e){
+    
         res.status(500).send()
     }
 })
-
 
 module.exports = router
