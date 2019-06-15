@@ -27,6 +27,18 @@ router.get('/plant', async (req,res)=>{
     }
 })
 
+router.get('/plant/:id', async (req,res)=>{
+    try{
+        const plant = await Plants.findOne({_id: req.params.id})
+        if(!plant){
+            res.status(404).send()
+        }
+        res.status(201).send(plant)
+    }catch(e){
+        res.status(500).send()
+    }
+})
+
 router.delete('/plant/:id', async (req,res)=>{    
     try{
         const plant = await Plants.findOneAndDelete({_id: req.params.id})
@@ -38,6 +50,36 @@ router.delete('/plant/:id', async (req,res)=>{
     }catch(e){
     
         res.status(500).send()
+    }
+})
+
+router.patch('/plant/:id', async(req,res)=>{
+  
+    const updateArray = Object.keys(req.body)
+    const updateTerms = ['name', 'water']
+    const validateTerm = updateArray.every((updateTerm)=>{
+        return updateTerms.includes(updateTerm)
+    })
+
+    if(!validateTerm){
+        res.status(404).send({error: 'invalid update'})
+    }
+    
+    try{
+        const plant = await Plants.findOne({_id: req.params.id})
+
+        if(!plant){
+            res.status(404).send()
+        }
+        updateArray.forEach((update)=>{
+            plant[update] = req.body[update]
+        })
+
+        await plant.save()
+        res.send(plant)
+    }catch(e){
+        res.status(500).send()
+        console.log(e)
     }
 })
 
