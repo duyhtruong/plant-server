@@ -63,6 +63,13 @@ userSchema.pre('save',async function(next){
     next()
 })
 
+userSchema.virtual('plants',{
+    ref: 'Plants',
+    localField: '_id',
+    foreignField: 'owner'
+})
+
+
 const User = mongoose.model('User', userSchema)
 
 module.exports = User

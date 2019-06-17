@@ -8,8 +8,13 @@ const plantSchema = new mongoose.Schema({
     water:{
         type: String,
         required: true
-    }
-}, {
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    } 
+},{
     timestamps: true
 })
 
