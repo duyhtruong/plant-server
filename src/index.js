@@ -3,6 +3,7 @@ require('./db/mongoose')
 const cors = require('cors')
 
 const plantRouter = require('./routers/plant')
+const userRouter = require('./routers/user')
 
 const app = express()
 const port = process.env.PORT || 9000
@@ -11,6 +12,7 @@ const port = process.env.PORT || 9000
 app.use(cors())
 app.use(express.json())
 app.use(plantRouter)
+app.use(userRouter)
 
 
 app.listen(port, ()=>{
