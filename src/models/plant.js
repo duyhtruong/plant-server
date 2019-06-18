@@ -5,6 +5,10 @@ const plantSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    sun:{
+        type:String,
+        required: true
+    },
     water:{
         type: String,
         required: true
