@@ -65,7 +65,7 @@ router.delete('/plant/:id',auth, async (req,res)=>{
 router.patch('/plant/:id',auth, async(req,res)=>{
   
     const updateArray = Object.keys(req.body)
-    const updateTerms = ['name', 'water','sun']
+    const updateTerms = ['name', 'water','sun','lastwater']
     const validateTerm = updateArray.every((updateTerm)=>{
         return updateTerms.includes(updateTerm)
     })

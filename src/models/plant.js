@@ -13,6 +13,10 @@ const plantSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    lastwater:{
+        type: String,
+        required: true
+    },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
