@@ -18,7 +18,7 @@ router.post('/plant',auth,  async (req,res)=>{
         await plant.save()
         res.status(201).send(plant)
     }catch(e){
-        res.status(400).send(e)
+        res.status(400).send({'error':e, 'test': 'hello'})
     }
 
 })
