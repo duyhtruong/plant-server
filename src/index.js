@@ -6,7 +6,7 @@ const plantRouter = require('./routers/plant')
 const userRouter = require('./routers/user')
 
 const app = express()
-const port = process.env.PORT || 9000
+const port = process.env.PORT
 
 
 app.use(cors())
