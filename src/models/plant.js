@@ -1,3 +1,9 @@
+/* 
+    Mongoose Plant Model
+    Link with user using owner Schema referencing user
+*/
+
+
 const mongoose = require('mongoose')
 
 const plantSchema = new mongoose.Schema({

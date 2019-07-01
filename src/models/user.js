@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const Plants = require('./plant')
 
 const userSchema = new mongoose.Schema({
     name:{
@@ -28,7 +29,10 @@ const userSchema = new mongoose.Schema({
 })
 
 
-//generate jwt user authentication token
+
+//Methods
+
+//Generate JWT user authentication token when logging in and creating User
 userSchema.methods.generateAuthToken = async function() {
     const user = this
     const token = jwt.sign({_id: user._id.toString()}, process.env.JWT_SECRET)
@@ -38,8 +42,7 @@ userSchema.methods.generateAuthToken = async function() {
     return token
 }
 
-
-//check log in credentials with database
+//Check login credentials with database
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({email:email})
 
@@ -54,7 +57,9 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user
     }
 
-//hash plain text password before saving using pre
+
+
+//Hash plain-text password before saving to database using pre method
 userSchema.pre('save',async function(next){
     const user = this
     if(user.isModified('password')){
@@ -63,10 +68,20 @@ userSchema.pre('save',async function(next){
     next()
 })
 
+
+//Link User model with Plant model
 userSchema.virtual('plants',{
     ref: 'Plants',
     localField: '_id',
     foreignField: 'owner'
+})
+
+
+//Delete plants linked to User when User is removed
+userSchema.pre('remove', async function(next){
+    const user = this
+    await Plants.deleteMany({owner: user._id})
+    next()
 })
 
 
